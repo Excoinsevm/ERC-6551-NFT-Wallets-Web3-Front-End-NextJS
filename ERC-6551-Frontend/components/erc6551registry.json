@@ -26,11 +26,6 @@
 		"type": "error"
 	},
 	{
-		"inputs": [],
-		"name": "InitializationFailed",
-		"type": "error"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -138,11 +133,6 @@
 				"internalType": "uint256",
 				"name": "salt",
 				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "initData",
-				"type": "bytes"
 			}
 		],
 		"name": "createAccount",
