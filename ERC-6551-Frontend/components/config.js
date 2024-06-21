@@ -18,7 +18,7 @@ const web3Provider = async () => {
 };
 
 const convertToEth = async (type, value) => {
-  if (type == 'eth') {
+  if (type == 'brock') {
     return Number(ethers.utils.formatEther(value)).toFixed('5');
   }
   else {
