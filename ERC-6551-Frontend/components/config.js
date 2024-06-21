@@ -1,19 +1,19 @@
 import { createWalletClient, custom } from "viem";
-import { sepolia } from "viem/chains";
+import { bitrock } from "./chain";
 import nftabi from "./nftabi.json";
 import erc20abi from "./erc20abi.json";
 import erc6551regAbi from "./erc6551registry.json";
 import erc6551accAbi from "./erc6551account.json";
 import { ethers } from "ethers";
 
-const nftContractAddr = 'NFT_COLLECTION_CONTRACT_ADDRESS';
-const erc6551RegistryAddr = 'ERC_6551_REGISTRY_CONTRACT_ADDRESS';
-const erc6551BaseAccount = 'ERC_6551_ACCOUNT_CONTRACT_ADDRESS';
-const usdtContractAddr = 'FAKE_USDT_TOKEN_CONTRACT_ADDRESS';
+const nftContractAddr = '0x8dDEC53Ad0FbBd07FC1e5E5C238dC8B9DcE45557';
+const erc6551RegistryAddr = '0xbE0c9852EeF1E8b78793Db47b2Dd5fAEC96fEB63';
+const erc6551BaseAccount = '0xD00F4825B27A838Fb4004Cf61f8eA041C3402090';
+const popcatContractAddr = '0xdcE5726e3Bc8E1F574416978279bb0AE62AB3c15';
 
 const web3Provider = async () => {
   const [account] = await window.ethereum.request({ method: "eth_requestAccounts" });
-  const client = createWalletClient({ account, chain: sepolia, transport: custom(window.ethereum) });
+  const client = createWalletClient({ account, chain: bitrock, transport: custom(window.ethereum) });
   return client;
 };
 
@@ -111,9 +111,9 @@ export async function getErc6551Balances(nft6551wallet) {
   let nativebalance = await convertToEth('eth', nativebalanceraw);
   let data = {
     nativebal: nativebalance,
-    nativetoken: 'ETH',
-    custombal: usdtbalance,
-    customtoken: 'USDT'
+    nativetoken: 'BROCK',
+    custombal: popcatbalance,
+    customtoken: 'POPCAT'
   }
   return [data];
 }
@@ -138,9 +138,9 @@ export async function walletAction(nft6551wallet, tokenname, appbuttontxt, nftid
     let signer = web3connection.signer;
     let usdtcontract = web3connection.usdtContract;
     let erc6551account = new ethers.Contract(nft6551wallet, erc6551accAbi, signer);
-    if (tokenname == "USDT") {
-      let usdtbalance = await usdtcontract.balanceOf(nft6551wallet);
-      let withdraw = await erc6551account.sendCustom(userwallet, usdtbalance, usdtContractAddr);
+    if (tokenname == "POPCAT") {
+      let usdtbalance = await popcatcontract.balanceOf(nft6551wallet);
+      let withdraw = await erc6551account.sendCustom(userwallet, popcatbalance, popcatContractAddr);
       if (withdraw) {
         return true;
       }
